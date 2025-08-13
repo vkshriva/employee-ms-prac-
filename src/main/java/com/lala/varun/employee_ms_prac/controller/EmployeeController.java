@@ -1,5 +1,6 @@
 package com.lala.varun.employee_ms_prac.controller;
 
+import com.lala.varun.employee_ms_prac.dto.APIResponseDto;
 import com.lala.varun.employee_ms_prac.dto.EmployeeDto;
 import com.lala.varun.employee_ms_prac.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,10 @@ public class EmployeeController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long id) {
-        EmployeeDto employeeDto = employeeService.getEmployeeById(id);
-        if (employeeDto != null) {
-            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+    public ResponseEntity<APIResponseDto> getEmployeeById(@PathVariable("id") Long id) {
+        APIResponseDto apiResponseDto = employeeService.getEmployeeById(id);
+        if (apiResponseDto != null) {
+            return new ResponseEntity<>(apiResponseDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
