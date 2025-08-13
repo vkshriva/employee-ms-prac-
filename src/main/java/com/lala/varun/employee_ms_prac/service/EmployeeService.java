@@ -1,5 +1,6 @@
 package com.lala.varun.employee_ms_prac.service;
 
+import com.lala.varun.employee_ms_prac.client.APIClient;
 import com.lala.varun.employee_ms_prac.dto.APIResponseDto;
 import com.lala.varun.employee_ms_prac.dto.DepartmentDto;
 import com.lala.varun.employee_ms_prac.dto.EmployeeDto;
@@ -17,7 +18,7 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private APIClient apiClient;
 
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
@@ -29,9 +30,7 @@ public class EmployeeService {
 
     public APIResponseDto getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id).orElse(null);
-        ResponseEntity<DepartmentDto> responseEntity =
-                restTemplate.getForEntity("http://localhost:8080/api/departments/" + employee.getDepartmentCode(), DepartmentDto.class);
-        DepartmentDto departmentDto = responseEntity.getBody();
+        DepartmentDto departmentDto = apiClient.getDepartmentByCode(employee.getDepartmentCode());
         if (employee != null && departmentDto != null) {
             EmployeeDto employeeDto = EmployeeMapper.toDto(employee);
             return APIResponseDto.builder()
