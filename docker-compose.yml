@@ -1,0 +1,44 @@
+#  ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#   ka matlab hai ki aap apne local system ka init.sql file Docker container
+#  ke andar /docker-entrypoint-initdb.d/ folder me copy kar rahe ho.
+#  Jab PostgreSQL container start hota hai,
+#  to is folder ke andar jitne bhi .sql files hain,
+#  unhe automatically execute karta hai.
+#  Isse aap apne database me schemas ya tables easily create kar
+#  sakte ho container start hote hi.
+
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_microservices
+    environment:
+      POSTGRES_DB: microservices
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data_dept:/var/lib/postgresql/dept
+
+
+#  springboot-app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: springboot_app
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/banking
+#      SPRING_DATASOURCE_USERNAME: user
+#      SPRING_DATASOURCE_PASSWORD: password
+#      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+#
+#    ports:
+#      - "8080:8080"
+#      - "5005:5005"
+#    depends_on:
+#      - postgres
+
+volumes:
+  postgres_data_emp:
