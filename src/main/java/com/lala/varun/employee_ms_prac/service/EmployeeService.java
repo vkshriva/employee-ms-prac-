@@ -33,10 +33,12 @@ public class EmployeeService {
         DepartmentDto departmentDto = apiClient.getDepartmentByCode(employee.getDepartmentCode());
         if (employee != null && departmentDto != null) {
             EmployeeDto employeeDto = EmployeeMapper.toDto(employee);
-            return APIResponseDto.builder()
-                    .employeeDto(employeeDto)
-                    .departmentDto(departmentDto)
-                    .build();
+            APIResponseDto apiResponseDto = new APIResponseDto();
+            apiResponseDto.setDepartmentDto(departmentDto);
+            apiResponseDto.setEmployeeDto(employeeDto);
+            return apiResponseDto;
+
+
         } else {
             return null; // or throw an exception
         }
