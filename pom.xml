@@ -84,6 +84,33 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>
+
+		<!--		Below 3 are used for Tracing -->
+		<!--		1: Micrometer (Internally it will have Brave or OpenTelemetry which is responsible for creating traces) -->
+		<!--		2: Zipkin-->
+		<!--		3: Actuator-->
+		<!--		 Micrometer is like instruments thermometer, stopwatch,counter where as actuator is like a dashboard that shows the readings from these instruments.-->
+
+
+		<!--This is used to provides integration bridge between Micrometer Tracing and Brave.-->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
+		<!--Below dependency is used to provides layer that send collected trace data from Brave to Zipkin-->
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+
+<!--		Note: Feign Client agar use kar rahe hoo toh extra care karna hota hai. By Default Feign kaam nahi karega else-->
+		<dependency>
+<groupId>io.github.openfeign</groupId>
+<artifactId>feign-micrometer</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
